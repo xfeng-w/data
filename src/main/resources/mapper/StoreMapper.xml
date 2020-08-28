@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xfeng.data.mapper.StoreMapper">
+
+    <insert id="batchSaveOrUpdate" parameterType="java.util.List" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
+        insert into store (
+        id,
+        code,
+        name,
+        tel,
+        created_time,
+        updated_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.code},
+            #{item.name},
+            #{item.tel},
+            #{item.createdTime},
+            #{item.updatedTime}
+            )
+        </foreach>
+        on duplicate key update
+        code = values(code),
+        name = values(name),
+        tel = values(tel),
+        created_time = values(created_time),
+        updated_time = values(updated_time)
+    </insert>
+
+</mapper>
